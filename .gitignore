@@ -1,5 +1,6 @@
-assets/css/node_modules
-assets/css/package-lock.json
-assets/css/package.json
-./config.js
+node_modules
+package-lock.json
+package.json
+config.js
 .env 
+.vscode
