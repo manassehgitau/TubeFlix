@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>TubeFlix</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./assets/css/style.css">
   <!-- <link rel="stylesheet" href="assets/css/output-style.css"> -->
+  <link rel="icon" href="./assets/icons/tubeflix-removebg.png">
 </head>
 
 <body class="bg-[#0d0c11] text-white font-sans m-0 p-0 bg-origin-border overflow-x-hidden">
@@ -19,7 +20,8 @@
         <img src="./assets/icons/tubeflix-removebg.png" alt="TubeFlix Logo" class="object-cover">
       </a>
       <div
-        class="nav-items hidden lg:flex flex-col lg:flex-row justify-center items-center text-md lg:justify-around text-center shadow-2xl rounded-3xl bg-[#0e151d] px-10 py-5 " style="background-color: rgba(13, 12, 17, 0.6);">
+        class="nav-items hidden lg:flex flex-col lg:flex-row justify-center items-center text-md lg:justify-around text-center shadow-2xl rounded-3xl bg-[#0e151d] px-10 py-5 "
+        style="background-color: rgba(13, 12, 17, 0.6);">
         <a href="#home" class="mx-5 text-[#fff] hover:text-[#f6101f] transition-colors duration-300 cursor-pointer">
           Home
         </a>
@@ -40,7 +42,7 @@
       <div class="nav-items Sign-in hidden lg:flex flex-row justify-between content-center">
         <button
           class="px-4 py-2 bg-[#f6101f] rounded-2xl hover:bg-white hover:text-black transition-colors duration-300 lg:block"><a
-            href="#trending">Trending</a></button>
+            href="#trending">Favorites List</a></button>
       </div>
 
       <div class="hamburger lg:hidden">
@@ -54,19 +56,19 @@
 
   <!-- Start Hero page of the website -->
   <section class="hero-section" id="home">
-    <div class="hero-image h-screen">
-      <div id="backdrop" class="w-screen h-3/4 bg-center text-white bg-no-repeat bg-cover"
-        style="background-image: url('assets/icons/tubeflix-dark-mode.png')">
-        <div class="mx-auto pt-50 lg:pt-60 px-17 flex flex-col justify-center ">
+    <div class="hero-image h-screen ">
+      <div id="backdrop" class="w-screen h-11/12 bg-center text-white bg-no-repeat bg-cover rounded-md"
+        style="background-image: url('assets/icons/tubeflix-dark-mode.png'); box-shadow: 0 0 50px rgba(230, 219, 219, 0.6); transition: box-shadow 0.5s ease">
+        <div class="mx-auto pt-60 md:pt-80 lg:pt-100 px-17 flex flex-col justify-center ">
           <div class=" lg:w-5/12 w-full">
             <p class="text-sm mb-4 lg:mb-8 font-semibold" id="movieGenres">
               - / -
             </p>
 
             <p class="text-sm mb-4 lg:mb-8 font-semibold" id="movieRating">
-            ⭐ -
+              ⭐ -
             </p>
-            
+
             <h1 class="my-4 text-lg lg:text-2xl font-bold leading-relaxed" id="movieTitle">
               -
             </h1>
@@ -74,12 +76,10 @@
               -
             </p>
             <div class="">
-              <button
-                class="bg-[#f6101f] text-white font-bold rounded-full  py-2 px-4 my-2 cursor-pointer">
+              <button class="bg-[#f6101f] text-white font-bold rounded-full  py-2 px-4 my-2 cursor-pointer">
                 <i class="fa-solid fa-heart"></i> Watch
               </button>
-              <button
-                class="lg:ml-6  bg-[#0d0c11] text-white font-bold rounded-full  py-2 px-4 cursor-pointer" >
+              <button class="lg:ml-6  bg-[#0d0c11] text-white font-bold rounded-full  py-2 px-4 cursor-pointer">
                 <i class="fa-solid fa-plus"></i> Add to List
               </button>
             </div>
@@ -88,6 +88,151 @@
       </div>
     </div>
   </section>
+  <!-- End Hero page of the website -->
+
+  <!--  Start trending section of the website -->
+  <section class="trending-cards mt-10 mx-4 ">
+    <div class="trending-container">
+      <div class="trends-title flex flex-col md:flex-row justify-center  items-center gap-4 md:justify-around">
+        <p class="trend-now text-md text-[#f6101f] font-semibold"><i class="fa-solid fa-chart-line"></i> <span
+            class="pl-6">Trends Now</span></p>
+        <p class="popular text-md" font-semibold><i class="fa-solid fa-fire"></i> <span class="pl-6">Popular</span></p>
+        <p class="Premeiers text-md font-semibold"><i class="fa-solid fa-star"></i> <span class="pl-6">Premiers</span>
+        </p>
+        <p class="recent text-md font-semibold"><i class="fa-solid fa-plus"></i> <span class="pl-6">Recently
+            Added</span></p>
+      </div>
+      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-70 my-2 mx-4">
+    </div>
+
+    <div class="relative w-full mx-auto max-w-11/12">
+      <!-- Movie Slider Wrapper -->
+      <div id="movie-slider" class="flex overflow-x-hidden gap-4">
+        <!-- Movie Card -->
+        <div class="min-w-[200px] shadow-lg rounded-lg overflow-hidden">
+
+        </div>
+
+        <!-- Repeat for additional cards from API -->
+
+      </div>
+
+      <!-- Controls -->
+      <button id="prev"
+        class="absolute -left-10  top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 ml-2 rounded-md">
+        Prev
+      </button>
+      <button id="next"
+        class="absolute -right-10 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 mr-2 rounded-md">
+        Next
+      </button>
+    </div>
+  </section>
+  <!--  End trending section of the website -->
+
+
+  <!--  Start movies section of the website -->
+  <section class="movies-section mt-20">
+    <div class="movie-container flex flex-col justify-center items-center max-w-11/12"></div>
+    <!-- Title Section -->
+    <div class="movie-title px-10 flex flex-col md:flex-row justify-center  items-center gap-4 md:justify-around">
+      <p class="trend-now text-md text-[#f6101f] font-semibold"><i class="fa-solid fa-video"></i> <span
+          class="pl-6">Movies</span></p>
+      <p class="popular text-md" font-semibold><i class="fa-solid fa-tv"></i> <span class="pl-6">Tv Shows</span></p>
+      <p class="Premeiers text-md font-semibold"><i class="fa-brands fa-searchengin"></i> <span class="pl-6">Search</span>
+      </p>
+    </div>
+    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-70 my-2 mx-4">
+
+    <!-- Genre Container with Buttons -->
+    <div class="relative flex max-w-3/4 self-center mx-auto">
+      <!-- Scrollable Genre List -->
+      <div class="movie-genres flex overflow-x-auto scroll-smooth gap-4 no-scrollbar mx-8" id="genre-list">
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(28)">Action</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(12)">Adventure</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(16)">Animation</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(35)">Comedy</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(80)">Crime</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(99)">Documentary</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(18)">Drama</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(10751)">Family</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(14)">Fantasy</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(36)">History</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(27)">Horror</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(10402)">Music</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(9648)">mystery</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(10749)">Romance</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(10770)">Tv-Movie</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(10752)">War</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(53)">Thriller</div>
+        <div
+          class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
+          onclick="getMoviesByGenre(37)">Western</div>
+      </div>
+
+      <!-- Prev/Next Buttons -->
+      <button id="prev-genre"
+        class="absolute -left-10 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-md ml-2 z-10">
+        Prev
+      </button>
+      <button id="next-genre"
+        class="absolute -right-14 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-md mr-2 z-10">
+        Next
+      </button>
+    </div>
+    </div>
+
+    <div class="w-11/12 mx-auto">
+      <!-- Movie Slider Wrapper -->
+      <div id="movie-container" class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-1 p-4">
+        <!-- Movie Card -->
+        <!-- Movie Card (dynamically added from JS) -->
+        <div class="min-w-[200px] shadow-lg rounded-lg overflow-hidden">
+
+        </div>
+
+        <!-- Repeat for additional cards from API -->
+
+      </div>
+
+    </div>
+  </section>
+  <!--  End movies section of the website -->
+
 
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <script src="./script.js"></script>
