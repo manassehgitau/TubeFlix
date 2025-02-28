@@ -107,21 +107,49 @@ async function displayMostTrendingShow() {
     let descriptionDiv = document.getElementById("movieDescription");
     descriptionDiv.textContent = `${description}`;
 
-    document.getElementById("backdrop-trailer").addEventListener("click", () => {
+    document.getElementById("backdrop-trailer").addEventListener("click", async () => {
       let backdropContainer = document.getElementById("backdrop");
-      backdropContainer.innerHTML = `url("")`;
-      backdropContainer.style.backgroundImage = 
-      console.log(trendingResponseData.results[0].id);
-      backdrop.innerHTML= `
-          <!-- Trailer (Embedded YouTube) -->
-          <div class="w-full h-64 sm:h-96 overflow-hidden rounded-lg shadow-md">
-            <iframe id="trailer-iframe-${
-              trendingResponseData.results[0].id
-            }" class="w-full h-full" src="" title="Movie Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-      `;
+      // Save the original background image before clearing
+      const originalBackgroundImage = backdropContainer.style.backgroundImage;
+      
+  const originalTitle = document.getElementById("movieTitle").textContent;
+  const originalGenres = document.getElementById("movieGenres").textContent;
+  const originalRating = document.getElementById("movieRating").textContent;
+  const originalDescription = document.getElementById("movieDescription").textContent;
 
-    })
+      // Clear the background image and show the video trailer
+      backdropContainer.style.backgroundImage = 'none';
+    
+      // Fetch the trailer link for the current trending movie
+      const movieID = trendingResponseData.results[0].id;
+      const trailerLink = await getMovieTrailerLink(movieID); // Assuming you have a getMovieTrailerLink function
+    
+      if (trailerLink) {
+        // Replace the backdrop content with the iframe for the trailer and add a Close button
+        backdropContainer.innerHTML = `
+          <!-- Trailer (Embedded YouTube) -->
+          <div class="w-full h-full sm:h-full overflow-hidden rounded-lg shadow-md">
+            <iframe id="trailer-iframe-${movieID}" class="w-full h-full" src="${trailerLink}" title="Movie Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <button id="close-trailer" class="absolute top-50 right-2 bg-[#f6101f] text-white font-bold py-1 px-4 rounded-full">Close</button>
+        `;
+    
+        // Add event listener for the Close button
+        document.getElementById("close-trailer").addEventListener("click", () => {
+          // Restore the original background image and remove the trailer
+          backdropContainer.innerHTML = ''; // Clear the trailer content
+          backdropContainer.style.backgroundImage = originalBackgroundImage; // Restore background image
+              // Restore movie details
+          document.getElementById("movieTitle").textContent = originalTitle;
+          document.getElementById("movieGenres").textContent = originalGenres;
+          document.getElementById("movieRating").textContent = originalRating;
+          document.getElementById("movieDescription").textContent = originalDescription;
+        });
+      } else {
+        console.error(`No trailer found for movie ID: ${movieID}`);
+      }
+    });
+    
 
     // if (!response.ok) {
     //   console.log("failed to fetch data!");
