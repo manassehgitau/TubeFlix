@@ -825,7 +825,8 @@ document.getElementById("search-tab").addEventListener("click",
 );
 
 document.getElementById("search-button").addEventListener("click", 
-  async function performSearch(){
+  async function performSearch(event){
+    event.stopPropagation();
     const query = document.getElementById("search-input").value;
     
     // Make sure the search query is not empty
