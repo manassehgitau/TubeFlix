@@ -111,12 +111,6 @@ async function displayMostTrendingShow() {
       let backdropContainer = document.getElementById("backdrop");
       // Save the original background image before clearing
       const originalBackgroundImage = backdropContainer.style.backgroundImage;
-      
-  const originalTitle = document.getElementById("movieTitle").textContent;
-  const originalGenres = document.getElementById("movieGenres").textContent;
-  const originalRating = document.getElementById("movieRating").textContent;
-  const originalDescription = document.getElementById("movieDescription").textContent;
-
       // Clear the background image and show the video trailer
       backdropContainer.style.backgroundImage = 'none';
     
@@ -178,7 +172,8 @@ async function displayTrendingShows() {
     let displayData = trendingResponseData;
     let showContainer = document.getElementById("movie-slider");
     showContainer.innerHTML = "";
-    setMovieTrailers(displayData.results);
+        document.addEventListener("DOMContentLoaded", setMovieTrailers(displayData.results));
+
 
     displayData.results.forEach((show) => {
       // posterURL Placement
@@ -314,7 +309,8 @@ async function displayPopularShows() {
     let displayData = popularResponseData;
     let showContainer = document.getElementById("movie-slider");
     showContainer.innerHTML = "";
-    setMovieTrailers(displayData.results);
+    document.addEventListener("DOMContentLoaded", setMovieTrailers(displayData.results));
+    
 
     displayData.results.forEach((show) => {
       // posterURL Placement
@@ -701,6 +697,14 @@ document.getElementById("movies-tab").addEventListener("click",
     document.getElementById("search-tab").classList.remove("text-[#f6101f]");
     document.getElementById("tvshows-tab").classList.remove("text-[#f6101f]");
     document.getElementById("search-container").classList.add("hidden");
+
+    const searchContainer = document.getElementById("search-container");
+    
+    // Toggle visibility of the search container
+    if (searchContainer.classList.contains("hidden")) {
+      searchContainer.classList.remove("hidden");
+    } 
+
     document.getElementById("movie-genres").innerHTML = "";
     document.getElementById("movie-genres").innerHTML = `
     <div class="movie-genres flex overflow-x-auto scroll-smooth gap-4 no-scrollbar mx-8" id="genre-list">
@@ -774,6 +778,13 @@ document.getElementById("tvshows-tab").addEventListener("click",
     document.getElementById("search-tab").classList.remove("text-[#f6101f]");
     document.getElementById("movies-tab").classList.remove("text-[#f6101f]");
     document.getElementById("alert").classList.add("hidden");
+
+    const searchContainer = document.getElementById("search-container");
+    
+    // Toggle visibility of the search container
+    if (searchContainer.classList.contains("hidden")) {
+      searchContainer.classList.remove("hidden");
+    } 
 
     document.getElementById("movie-genres").innerHTML = "";
     document.getElementById("movie-genres").innerHTML = `
@@ -854,7 +865,7 @@ document.getElementById("search-tab").addEventListener("click",
 
 document.getElementById("search-button").addEventListener("click", 
   async function performSearch(event){
-    event.stopPropagation();
+    event.preventDefault();
     const query = document.getElementById("search-input").value;
     
     // Make sure the search query is not empty
