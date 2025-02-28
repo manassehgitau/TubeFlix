@@ -9,8 +9,7 @@
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./assets/css/style.css">
-  <!-- <link rel="stylesheet" href="assets/css/output-style.css"> -->
-  <link rel="icon" href="./assets/icons/tubeflix-removebg.png">
+  <link rel="icon" href="./assets/icons/tubeflix-dark-mode.png">
 </head>
 
 <body class="bg-[#0d0c11] text-white font-sans m-0 p-0 bg-origin-border overflow-x-hidden">
@@ -59,8 +58,8 @@
     <div class="hero-image h-screen ">
       <div id="backdrop" class="w-screen h-11/12 bg-center text-white bg-no-repeat bg-cover rounded-md"
         style="background-image: url('assets/icons/tubeflix-dark-mode.png'); box-shadow: 0 0 50px rgba(230, 219, 219, 0.6); transition: box-shadow 0.5s ease">
-        <div class="mx-auto pt-60 md:pt-80 lg:pt-100 px-17 flex flex-col justify-center ">
-          <div class=" lg:w-5/12 w-full">
+        <div class="mx-auto pt-50 md:pt-80 lg:pt-100 px-17 flex flex-col justify-center ">
+          <div class=" lg:w-5/12 w-full px-7 py-5 rounded-xl bg-[#0d0c11] opacity-80 ">
             <p class="text-sm mb-4 lg:mb-8 font-semibold" id="movieGenres">
               - / -
             </p>
@@ -76,10 +75,10 @@
               -
             </p>
             <div class="">
-              <button class="bg-[#f6101f] text-white font-bold rounded-full  py-2 px-4 my-2 cursor-pointer">
+              <button id="backdrop-trailer" class="bg-[#f6101f] text-white hover:bg-white hover:text-[#f6101f] font-bold rounded-full py-2 px-4 my-2 cursor-pointer">
                 <i class="fa-solid fa-heart"></i> Watch
               </button>
-              <button class="lg:ml-6  bg-[#0d0c11] text-white font-bold rounded-full  py-2 px-4 cursor-pointer">
+              <button class="lg:ml-6  bg-black text-white hover:bg-white hover:text-black font-bold rounded-full  py-2 px-4 cursor-pointer">
                 <i class="fa-solid fa-plus"></i> Add to List
               </button>
             </div>
@@ -94,12 +93,12 @@
   <section class="trending-cards mt-10 mx-4 ">
     <div class="trending-container">
       <div class="trends-title flex flex-col md:flex-row justify-center  items-center gap-4 md:justify-around">
-        <p class="trend-now text-md text-[#f6101f] font-semibold"><i class="fa-solid fa-chart-line"></i> <span
+        <p id="trends-now" class="trend-now text-md text-[#f6101f] font-semibold cursor-pointer"><i class="fa-solid fa-chart-line"></i> <span
             class="pl-6">Trends Now</span></p>
-        <p class="popular text-md" font-semibold><i class="fa-solid fa-fire"></i> <span class="pl-6">Popular</span></p>
-        <p class="Premeiers text-md font-semibold"><i class="fa-solid fa-star"></i> <span class="pl-6">Premiers</span>
+        <p id="popular" class="popular text-md font-semibold cursor-pointer"><i class="fa-solid fa-fire"></i> <span class="pl-6">Popular</span></p>
+        <p id="premeiers" class="Premeiers text-md font-semibold cursor-pointer"><i class="fa-solid fa-star"></i> <span class="pl-6">Premiers</span>
         </p>
-        <p class="recent text-md font-semibold"><i class="fa-solid fa-plus"></i> <span class="pl-6">Recently
+        <p id="recent" class="recent text-md font-semibold"><i class="fa-solid fa-plus"></i> <span class="pl-6">Recently
             Added</span></p>
       </div>
       <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-70 my-2 mx-4">
@@ -136,17 +135,29 @@
     <div class="movie-container flex flex-col justify-center items-center max-w-11/12"></div>
     <!-- Title Section -->
     <div class="movie-title px-10 flex flex-col md:flex-row justify-center  items-center gap-4 md:justify-around">
-      <p class="trend-now text-md text-[#f6101f] font-semibold"><i class="fa-solid fa-video"></i> <span
+      <p class="trend-now text-md text-[#f6101f] font-semibold cursor-pointer" id="movies-tab"><i class="fa-solid fa-video"></i> <span
           class="pl-6">Movies</span></p>
-      <p class="popular text-md" font-semibold><i class="fa-solid fa-tv"></i> <span class="pl-6">Tv Shows</span></p>
-      <p class="Premeiers text-md font-semibold"><i class="fa-brands fa-searchengin"></i> <span class="pl-6">Search</span>
+      <p class="popular text-md font-semibold cursor-pointer"  id="tvshows-tab"><i class="fa-solid fa-tv"></i> <span class="pl-6">Tv Shows</span></p>
+      <p class="Premeiers text-md font-semibold cursor-pointer" id="search-tab"><i class="fa-brands fa-searchengin"></i> <span class="pl-6">Search</span>
       </p>
     </div>
-    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-70 my-2 mx-4">
 
-    <!-- Genre Container with Buttons -->
-    <div class="relative flex max-w-3/4 self-center mx-auto">
-      <!-- Scrollable Genre List -->
+    <!-- Search Form (Initially Hidden) -->
+    <div id="search-container" class="hidden flex flex-col items-center justify-center my-4">
+      <div id="alert" class="bg-[#0e151d] text-base text-[#f6101f] px-4 py-2 my-3 rounded-xl hidden"></div>
+      <div class="search-engine flex flex-row justify0center items-center">
+        <form action="" id="search-form">
+          <input type="text" id="search-input" class="border border-gray-300 p-2 rounded-lg" placeholder="Search for movies or TV shows..." />
+          <label for="search-input" class="hidden"></label>
+          <button id="search-button" class="bg-[#f6101f] text-white px-4 py-2 rounded-lg ml-2 hover:text-[#f6101f] hover:bg-white">Submit</button>  
+        </form>
+        
+      </div>
+    </div>
+
+   <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-70 my-2 mx-4">
+
+    <div id="movie-genres" class="relative flex max-w-3/4 self-center mx-auto">
       <div class="movie-genres flex overflow-x-auto scroll-smooth gap-4 no-scrollbar mx-8" id="genre-list">
         <div
           class="genre bg-[#f6101f] w-[140px] h-[49px] text-white text-center font-bold flex justify-center items-center rounded-2xl mx-2 py-1 px-3 my-2 cursor-pointer"
@@ -204,7 +215,6 @@
           onclick="getMoviesByGenre(37)">Western</div>
       </div>
 
-      <!-- Prev/Next Buttons -->
       <button id="prev-genre"
         class="absolute -left-10 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-md ml-2 z-10">
         Prev
@@ -214,11 +224,11 @@
         Next
       </button>
     </div>
-    </div>
+    <!-- </div> -->
 
-    <div class="w-11/12 mx-auto">
+    <div class="w-11/12 mx-auto self-center">
       <!-- Movie Slider Wrapper -->
-      <div id="movie-container" class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-1 p-4">
+      <div id="movie-container" class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-1 p-4 ">
         <!-- Movie Card -->
         <!-- Movie Card (dynamically added from JS) -->
         <div class="min-w-[200px] shadow-lg rounded-lg overflow-hidden">
@@ -233,9 +243,58 @@
   </section>
   <!--  End movies section of the website -->
 
+    <!-- Start footer of the website -->
+    <footer class="py-20 text-white">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="text-lg sm:text-xl font-bold mb-4 bg-gradient-to-bl from-[#dfb9b9] to-[#f6101f] bg-clip-text text-transparent">About TubeFlix</h3>
+            <p class="text-gray-400 text-sm sm:text-base lg:w-55">Get the bst movie recommendations</p>
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-bold mb-4 bg-gradient-to-bl from-[#dfb9b9] to-[#f6101f] bg-clip-text text-transparent">Quick Links</h3>
+            <ul class="text-sm sm:text-base">
+              <li><a href="#" class="hover:underline">Home</a></li>
+              <li><a href="#" class="hover:underline">Tv Shows</a></li>
+              <li><a href="#" class="hover:underline">movies</a></li>
+              <li><a href="#" class="hover:underline">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-bold mb-4 bg-gradient-to-bl from-[#dfb9b9] to-[#f6101f] bg-clip-text text-transparent">Contact</h3>
+            <ul class="text-sm sm:text-base">
+              <li><a href="mailto:info@bithealth.com" class="hover:underline">info@tubeflix.com</a></li>
+              <li><a href="tel:+123456789" class="hover:underline">+254 734 567 891</a></li>
+              <li><a href="tel:+123456789" class="hover:underline">Location: Sweden</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-bold mb-4 bg-gradient-to-bl from-[#dfb9b9] to-[#f6101f] bg-clip-text text-transparent">Follow Us</h3>
+            <div class="icons">
+              <ul class="icon flex flex-row justify-start content-center">
+                <li><a href="#"
+                    class="text-lg text-[#f6101f] hover:text-white transition-colors duration-300 px-3 cursor-pointer"><i
+                      class="fa-brands fa-instagram"></i></a></li>
+                <li><a href="#"
+                    class="text-lg text-[#f6101f] hover:text-white transition-colors duration-300 px-3 cursor-pointer"><i
+                      class="fa-brands fa-facebook"></i></a></li>
+                <li><a href="#"
+                    class="text-lg text-[#f6101f] hover:text-white transition-colors duration-300 px-3 cursor-pointer"><i
+                      class="fa-brands fa-twitter"></i></a></li>
+                <li><a href="#"
+                    class="text-lg text-[#f6101f] hover:text-white transition-colors duration-300 px-3 cursor-pointer"><i
+                      class="fa-brands fa-linkedin"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+      <!-- End Footer of Website-  -->
+
 
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-  <script src="./script.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 
 </html>
