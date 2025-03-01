@@ -74,8 +74,8 @@ _To install the project locally on your machine, follow the steps below. _
    cd TubeFlix
    code .
    ```
-   5. To run the project
-      ```
+5. To run the project
+      ```baseh
       npm run dev
       ```
       
