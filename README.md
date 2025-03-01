@@ -11,10 +11,10 @@ A website that recommends the best movies and tv shows to watch
 <a href="https://github.com/manassehgitau/TubeFlix/blob/main/README.md"><strong>Explore the docs »</strong></a>
  <br />
  <br />
-<a href="https://github.com/manassehgitau/TubeFlix/blob/main/README.md](https://www.canva.com/design/DAF_ycM3wBI/eg9OvrqC8Zj7PkHeUQ16rg/view?utm_content=DAF_ycM3wBI&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h9f1517011b)"><strong>See the Presentation »</strong></a>
+<a href="https://www.canva.com/design/DAGgg8958MY/gGwfhmwu66pNvVxgnqSd4Q/view?utm_content=DAGgg8958MY&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6e6cb123be"><strong>See the Presentation »</strong></a>
 <br/>
 <br/>
-<a href="https://manassehgitau.github.io/TubeFlix/">View Demo .</a>  
+<a href="https://capstone-02-zeta.vercel.app/">View Demo .</a>  
 <a href="https://github.com/manassehgitau/TubeFlix/issues">Report Bug .</a>
 <a href="https://github.com/manassehgitau/TubeFlix/issues">Request Feature</a>
 </p>
@@ -26,35 +26,24 @@ A website that recommends the best movies and tv shows to watch
 
 <!-- ![Product Screenshot](./assets/imgs/hero.png) -->
 
-TubeFlix is a tech business specialising in smartwatches. These wearables are designed to track individual health metrics in real-time while automatically logging data to TubeFlix's secure infrastructure. Once collected, this essential information is processed and transferred directly to the healthcare facility where the individual is registered, allowing medical specialists to give timely interventions as needed.
+Tubeflix is a   personalized movie and TV show recommendation website. It solves the problem of overwhelming content choices by providing curated recommendations.
 
-### Features of the Smartwatch:
-
----
-
-1. Health Sensors: The smartwatch tracks critical health indicators such as heart rate, blood pressure, and oxygen levels, providing valuable insights into its users' well-being. It is equipped with various health sensors.
-2. IoT Connectivity: The smartwatch effortlessly connects with other devices, leveraging the Internet of Things (IoT) and enabling a comprehensive health monitoring ecosystem that enhances user experience and data accuracy.
-3. AI Integration: Utilizing artificial intelligence, the smartwatch analyzes the collected data to offer personalized health tips and alerts, helping users maintain optimal health and stay informed about potential health concerns.
-4. Assisted Living Features: Designed with the needs of seniors in mind, the device includes features that assist with daily living activities, such as medication reminders and emergency alerts, promoting independence and peace of mind.
-
-### Sections of the website:
+### Features
+- Tubeflix helps users discover movies and TV shows based on their preferences.
+- Features personalized recommendations, search functionality, and user-friendly design.
+- Tubeflix enhances entertainment discovery by minimizing decision fatigue and offering tailored content.
 
 ---
 
-- Landing Page: A visually appealing and informative landing page that introduces visitors to Bit Health and its revolutionary smartwatch.
-- Device Features: A dedicated section highlighting the unparalleled capabilities of the smartwatch, showcasing how it stands out in the market.
-- About the Company: An engaging narrative about Bit Health, its mission, vision, and commitment to advancing health technology.
-- Services Offered: A clear overview of the services provided by Bit Health, emphasizing the value added to both users and healthcare providers.
-- The Team: A section introducing the talented individuals behind the startup, showcasing their expertise and dedication to health tech innovation.
-- Footer: Quick links and contact information for easy navigation and access to customer support.
-- (Optional) Blog Section: A curated blog that offers insights on health tech trends, tips for using the smartwatch effectively, and updates from Bit Health, fostering community engagement and keeping users informed.
 
 ### Built With
 
 The TubeFlix website has been built with the following technologies
 
-- [HTML and CSS]()
 - [Tailwind CSS]()
+- [Js]()
+- [Vite]()
+- [TMDB API]()
 - [Git]()
 - [Vs Code]()
 
@@ -66,9 +55,9 @@ To contribute to this project the following steps must be followed.
 
 The following are required before working on the project:
 
-- Basic knowledge of HTML, CSS, Tailwind CSS and Javascript
+- Basic knowledge of HTML, CSS, Tailwind CSS, Javascript and using APIs
 - A preferred code editor or IDE installed on your PC
-- An understanding of how git works
+- An understanding of how version control works
 
 ### Installation
 
@@ -85,7 +74,11 @@ _To install the project locally on your machine, follow the steps below. _
    cd TubeFlix
    code .
    ```
-
+   5. To run the project
+      ```
+      npm run dev
+      ```
+      
 ## Usage
 
 To run the project locally use the following steps
@@ -97,8 +90,10 @@ To run the project locally use the following steps
 
 - [x] Navigation Bar
 - [x] Hero Section
-- [x] Services and About section
-- [x] Prices and team section
+- [x] Trendng section
+- [x] Tv Shows and Movies section
+- [x] Search section
+- [x] API Fetches
 - [x] footer section
 - [ ] Additional Features
   - [ ] Blog Section
