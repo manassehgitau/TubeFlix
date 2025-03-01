@@ -74,17 +74,18 @@ _To install the project locally on your machine, follow the steps below. _
    cd TubeFlix
    code .
    ```
-5. To run the project
-      ```baseh
-      npm run dev
-      ```
       
 ## Usage
 
 To run the project locally use the following steps
-
+- create you account in the [TMDB site](https://www.themoviedb.org/login)
 - start a live server of the project locally on your machine
-- run the localhost of the project on your preferred project to render the HTML file
+- replace the API keys and read token with your own using the .env file
+- run the project using the npm localhost since it is using vite
+    ### To run the project
+       ```bash
+       npm run dev
+       ```
 
 ## Development Roadmap
 
@@ -96,8 +97,9 @@ To run the project locally use the following steps
 - [x] API Fetches
 - [x] footer section
 - [ ] Additional Features
-  - [ ] Blog Section
-  - [ ] Redirect to active blog posts
+  - [ ] backend for users
+  - [ ] Ratings filter
+  - [ ] personalized recommendation
 
 See the [open issues](https://github.com/manassehgitau/TubeFlix/issues) for a full list of proposed features (and known issues).
 
