@@ -82,11 +82,13 @@ To run the project locally use the following steps
 - start a live server of the project locally on your machine
 - replace the API keys and read token with your own using the .env file
 - run the project using the npm localhost since it is using vite
-    ### To run the project
-       ```bash
-       npm run dev
-       ```
-
+    <br><br>
+    **To run the project:**
+  <br><br>
+   ```bash
+  npm run dev
+   ```
+   
 ## Development Roadmap
 
 - [x] Navigation Bar
