@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TubeFlix</title>
+    <!-- Include SweetAlert2 for alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Include Email.js for sending emails -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -239,9 +243,54 @@
 
       </div>
 
+      <!-- Pagination Buttons -->
+      <div class="flex justify-between items-center mt-6 mb-6">
+        <button id="prev-page-btn" class="bg-gray-500 text-white py-2 px-4 rounded-lg disabled:opacity-50" disabled>Previous</button>
+        <span id="current-page" class="text-white mx-4">Page 1</span>
+        <button id="next-page-btn" class="bg-blue-500 text-white py-2 px-4 rounded-lg">Next</button>
+      </div>
+
     </div>
   </section>
   <!--  End movies section of the website -->
+
+    <section>
+      <div class="container mx-auto px-4 pt-30 pb-20" id="contact">
+        <h2 class="text-3xl lg:text-4xl font-bold text-center mb-8 text-[#dfb9b9]">Get In Touch</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-2xl font-semibold mb-4 text-center">Location</h3>
+              <div class="w-180 h-80 mx-auto">
+                  <div class="map-container shadow-2xl">
+                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.846304521725!2d36.79814067577996!3d-1.2647554356046302!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1791a3266197%3A0x1b878049a1937f81!2sKipro%20Center%20Dental%20Clinic!5e0!3m2!1sen!2ske!4v1732196627667!5m2!1sen!2ske" width="100%" height="300" style="border:0;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  </div>
+              </div>
+          </div>
+          
+          <div>
+            <form action="#" method="POST" class="px-7 py-5 rounded-xl bg-[#0d0c11] opacity-80 shadow-md" id="contactForm">
+              <div class="mb-4">
+                <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
+                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <div class="error-txt">Full Name cannot be blank</div>
+              </div>
+              <div class="mb-4">
+                <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <div class="error-txt">Email cannot be blank</div>
+              </div>
+              <div class="mb-4">
+                <label for="message" class="block text-gray-700 font-semibold mb-2">Message</label>
+                <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                <div class="error-txt">Message cannot be blank</div>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="w-full bg-gradient-to-bl from-[#dfb9b9] to-[#f6101f] text-white py-2 px-4 rounded-xl font-semibold hover:text-blue-700 hover:text-[#64748b] transition-colors duration-300">Send Message</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </section>
 
     <!-- Start footer of the website -->
     <footer class="py-20 text-white">
@@ -265,7 +314,7 @@
             <ul class="text-sm sm:text-base">
               <li><a href="mailto:info@bithealth.com" class="hover:underline">info@tubeflix.com</a></li>
               <li><a href="tel:+123456789" class="hover:underline">+254 734 567 891</a></li>
-              <li><a href="tel:+123456789" class="hover:underline">Location: Sweden</a></li>
+              <li><a href="tel:+123456789" class="hover:underline">Location: Kipro Centre, Westlands</a></li>
             </ul>
           </div>
           <div>

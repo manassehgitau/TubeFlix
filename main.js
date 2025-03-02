@@ -688,7 +688,7 @@ document.getElementById("recent").addEventListener("click",
     displayLatestShows();
   }
 );
-
+ let genreId;
 document.getElementById("movies-tab").addEventListener("click", 
   // Function to load movies
   function loadMovies() {
@@ -702,7 +702,7 @@ document.getElementById("movies-tab").addEventListener("click",
     
     // Toggle visibility of the search container
     if (searchContainer.classList.contains("hidden")) {
-      searchContainer.classList.remove("hidden");
+      searchContainer.classList.add("hidden");
     } 
 
     document.getElementById("movie-genres").innerHTML = "";
@@ -757,18 +757,14 @@ document.getElementById("movies-tab").addEventListener("click",
 
     `;
     // Get all genre elements and add event listeners
-    const genreElements = document.querySelectorAll(".genre");
-    genreElements.forEach((genreElement) => {
-      genreElement.addEventListener("click", function () {
-        const genreId = this.getAttribute("data-genre-id");
-        getTvShowByGenre(genreId);
-      });
+  const genreElements = document.querySelectorAll(".genre");
+  genreElements.forEach((genreElement) => {
+    genreElement.addEventListener("click", function () {
+      genreId = this.getAttribute("data-genre-id"); // Store the selected genreId
+      getMoviesByGenre(genreId, 1); // Fetch the first page of the selected genre
     });
-
-    // Load movies
-    getMoviesByGenre(28); // Or any default genre you want to show
-  }
-);
+  });
+});
 
 document.getElementById("tvshows-tab").addEventListener("click", 
   // Function to load TV shows
@@ -779,13 +775,12 @@ document.getElementById("tvshows-tab").addEventListener("click",
     document.getElementById("movies-tab").classList.remove("text-[#f6101f]");
     document.getElementById("alert").classList.add("hidden");
 
-    const searchContainer = document.getElementById("search-container");
-    
     // Toggle visibility of the search container
     if (searchContainer.classList.contains("hidden")) {
-      searchContainer.classList.remove("hidden");
+      searchContainer.classList.add("hidden");
     } 
 
+  
     document.getElementById("movie-genres").innerHTML = "";
     document.getElementById("movie-genres").innerHTML = `
     <div class="movie-genres flex overflow-x-auto scroll-smooth gap-4 no-scrollbar mx-8" id="genre-list">
@@ -835,13 +830,10 @@ document.getElementById("tvshows-tab").addEventListener("click",
     const genreElements = document.querySelectorAll(".genre");
     genreElements.forEach((genreElement) => {
       genreElement.addEventListener("click", function () {
-        const genreId = this.getAttribute("data-genre-id");
+        genreId = this.getAttribute("data-genre-id");
         getTvShowByGenre(genreId);
       });
     });
-
-    // Load TV shows
-    getTvShowByGenre(10759); // Or any default genre for TV shows
   }
 );
 
@@ -1232,124 +1224,96 @@ document.getElementById("search-button").addEventListener("click",
   }
 );
 
-async function getMoviesByGenre(genreID = 28) {
-  const movieBasedOnGenreURL =
-    baseURL +
-    `discover/movie?include_adult=false&include_video=true&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreID}`;
+let currentPage = 1; // To keep track of the current page
+const totalPages = 500; // You can dynamically update this based on the API response
+
+// Fetch movies by genre and page
+async function getMoviesByGenre(genreID, page = 1) {
+  let movieBasedOnGenreURL = `${baseURL}discover/movie?include_adult=false&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genreID}`;
+
   try {
     const apiKey = import.meta.env.VITE_THE_MOVIE_DATABASE_READ_ACCESS_TOKEN;
     const movieBasedOnGenreResponse = await fetch(movieBasedOnGenreURL, {
       headers: {
-        // "Authorization": `token ${process.env.THE_MOVIE_DATABASE_API}`,
         Authorization: `bearer ${apiKey}`,
         accept: `application/json`,
       },
     });
-    // console.log(`status Code: ${movieBasedOnGenreResponse.status}`);
-    const movieBasedOnGenreResponseData =
-      await movieBasedOnGenreResponse.json();
-    // console.log(movieBasedOnGenreResponseData);
 
+    const movieBasedOnGenreResponseData = await movieBasedOnGenreResponse.json();
     let displayMovieData = movieBasedOnGenreResponseData;
 
-    // Clear previous movie cards before adding new ones
+    // Update current page in the UI
+    currentPage = movieBasedOnGenreResponseData.page;
+    document.getElementById('current-page').innerText = `Page ${currentPage}`;
+
+    document.getElementById('prev-page-btn').disabled = currentPage === 1;
+    document.getElementById('next-page-btn').disabled = currentPage >= movieBasedOnGenreResponseData.total_pages;
+    document.getElementById("next-page-btn").addEventListener("click", () => {
+      if (currentPage < totalPages) {
+        movieBasedOnGenreURL = `${baseURL}discover/movie?include_adult=false&include_video=true&language=en-US&page=${currentPage += 1}&sort_by=popularity.desc&with_genres=${genreID}`;
+      }
+    });
+  
+    // Handle Previous Page Button Click
+    document.getElementById("prev-page-btn").addEventListener("click", () => {
+      if (currentPage > 1) {
+        movieBasedOnGenreURL = `${baseURL}discover/movie?include_adult=false&include_video=true&language=en-US&page=${currentPage -= 1}&sort_by=popularity.desc&with_genres=${genreID}`;
+      }
+    });
+
+    // Clear the container
     const movieContainer = document.getElementById("movie-container");
     movieContainer.innerHTML = ""; // Clear existing cards
     setMovieTrailers(displayMovieData.results);
 
+    // Loop through the results and create movie cards (same as before)
     displayMovieData.results.forEach((movie) => {
-      // posterURL Placement
       let moviePosterURL = posterImgsURL + movie.poster_path;
-      // console.log(moviePosterURL);
-
-      // rating placement
+      let movieTitle = movie.original_title || movie.original_name;
       const movieRating = movie.popularity;
-      // console.log(movieRating);
-
-      // genres placement
       const releaseDate = movie.release_date;
-      // console.log(releaseDate);
-
-      // title placement
-      let movieTitle = movie.original_title;
-      if (movieTitle === undefined) {
-        movieTitle = movie.original_name;
-      }
-      // console.log(movieTitle);
-
-      // genres placement
-      const showType = movie.media_type;
-      // console.log(showType);
-
-      // description placement
       const movieDescription = movie.overview;
 
-      // Create element to add the movie/show card
+      // Create the movie card
       let showsCard = document.createElement("div");
       showsCard.className += "carousel-item w-full sm:w-1/2 lg:w-1/4 p-4";
 
       showsCard.innerHTML = `
-      <div class="min-w-[200px] bg-[#0e151d] shadow-lg rounded-lg transition-all duration-300 ease-in-out cursor-pointer movie-card">
-        <img src="${moviePosterURL}" alt="Movie Poster" class="w-full h-48 object-cover">
-        <div class="p-4">
-          <h2 class="text-xl font-semibold line-clamp-1">${movieTitle}</h2>
-          <p id="showType" class="text-sm">${releaseDate}</p>
-          <div class="text-yellow-400">⭐ ${Math.floor(movieRating)}M</div>
-        </div>
-        <!-- Movie Details Section (Hidden by Default) -->
-        <div class="movie-details hidden fixed inset-0 bg-[#0e151d] bg-opacity-90 p-6 z-50 overflow-y-auto flex justify-center items-center">
-          <div class="max-w-4xl w-full bg-[#1c2733] rounded-lg shadow-lg p-6">
-            <div class="flex justify-between items-center mb-6">
-              <h3 class="text-2xl font-semibold text-white">${movieTitle}</h3>
-              <!-- Close Button -->
-              <button class="close-button text-3xl font-bold text-white hover:text-gray-400 transition duration-200 ease-in-out">&times;</button>
-            </div>
-
-            <div class="mb-6">
-              <h3 class="text-lg font-semibold text-white my-3">Movie Synopsis</h3>
-              <p class="text-white text-md mb-4 mt-2 px-2 leading-relaxed">
-                ${movieDescription}
-              </p>
-            </div>
-          
-            <!-- Trailer (Embedded YouTube) -->
-            <div class="w-full h-64 sm:h-96 overflow-hidden rounded-lg shadow-md">
-              <iframe id="trailer-iframe-${
-                movie.id
-              }" class="w-full h-full"  title="Movie Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="min-w-[200px] bg-[#0e151d] shadow-lg rounded-lg transition-all duration-300 ease-in-out cursor-pointer movie-card">
+          <img src="${moviePosterURL}" alt="Movie Poster" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <h2 class="text-xl font-semibold line-clamp-1">${movieTitle}</h2>
+            <p id="showType" class="text-sm">${releaseDate}</p>
+            <div class="text-yellow-400">⭐ ${Math.floor(movieRating)}M</div>
+          </div>
+          <div class="movie-details hidden fixed inset-0 bg-[#0e151d] bg-opacity-90 p-6 z-50 overflow-y-auto flex justify-center items-center">
+            <div class="max-w-4xl w-full bg-[#1c2733] rounded-lg shadow-lg p-6">
+              <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-semibold text-white">${movieTitle}</h3>
+                <button class="close-button text-3xl font-bold text-white hover:text-gray-400 transition duration-200 ease-in-out">&times;</button>
+              </div>
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold text-white my-3">Movie Synopsis</h3>
+                <p class="text-white text-md mb-4 mt-2 px-2 leading-relaxed">${movieDescription}</p>
+              </div>
+              <div class="w-full h-64 sm:h-96 overflow-hidden rounded-lg shadow-md">
+                <iframe id="trailer-iframe-${movie.id}" class="w-full h-full" title="Movie Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
             </div>
           </div>
         </div>
+      `;
 
-      </div>
-        `;
+      // Add event listeners for opening/closing movie details (same as before)
+      showsCard.querySelector(".movie-card").addEventListener("click", function () {
+        toggleDetails(this, "movie");
+      });
 
-    // Add event listeners for the TV Show Card
-    showsCard.querySelector(".movie-card").addEventListener("click", function () {
-      toggleDetails(this, "movie");
-    });
-
-    showsCard.querySelector(".close-button").addEventListener("click", function (e) {
-      e.stopPropagation(); // Prevents triggering the card click when pressing the close button
-      toggleDetails(this.closest(".movie-card"), "movie");
-    });
-
-    // Function to toggle details visibility (show or hide)
-    function toggleDetails(card, section) {
-      const detailsSection = card.querySelector(`.${section}-details`);
-
-      if (detailsSection.classList.contains("hidden")) {
-        // Show the details section
-        detailsSection.classList.remove("hidden");
-      } else {
-        // Hide the details section and stop the trailer from playing
-        const iframe = detailsSection.querySelector("iframe");
-        if (iframe) {
-          iframe.src = ""; // Reset the iframe src to stop the trailer
-        }
-        detailsSection.classList.add("hidden");
-      }
-    }
+      showsCard.querySelector(".close-button").addEventListener("click", function (e) {
+        e.stopPropagation(); // Prevents triggering the card click when pressing the close button
+        toggleDetails(this.closest(".movie-card"), "movie");
+      });
 
       movieContainer.appendChild(showsCard);
     });
@@ -1358,7 +1322,7 @@ async function getMoviesByGenre(genreID = 28) {
   }
 }
 
-async function getTvShowByGenre(genreID = 16) {
+async function getTvShowByGenre(genreID=28, page=1) {
   const tvShowBasedOnGenreURL =
     baseURL + `discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreID}`;
   try {
@@ -1376,6 +1340,18 @@ async function getTvShowByGenre(genreID = 16) {
     // console.log(movieBasedOnGenreResponseData);
 
     let displayTvShowData = tvShowBasedOnGenreResponseData;
+
+     // Update current page in the UI
+     currentPage = movieBasedOnGenreResponseData.page;
+     document.getElementById('current-page').innerText = `Page ${currentPage}`;
+ 
+     // Enable or disable the Previous button
+     document.getElementById('prev-page-btn').disabled = currentPage === 1;
+ 
+     // Enable or disable the Next button based on total pages
+     document.getElementById('next-page-btn').disabled = currentPage >= movieBasedOnGenreResponseData.total_pages;
+ 
+     
 
     // Clear previous movie cards before adding new ones
     const tvShowContainer = document.getElementById("movie-container");
@@ -1480,6 +1456,9 @@ async function getTvShowByGenre(genreID = 16) {
   } catch (error) {
     console.error(error.message);
   }
+
+
+
 }
 async function getMovieTrailerLink(movieID) {
   const showTrailerURL = baseURL + `/movie/${movieID}/videos`;
@@ -1571,8 +1550,9 @@ async function getTvShowTrailerLink(tvShowID) {
       return null;
     }
 
+    // Add filtering for official YouTube trailer with 1080p size
     for (let entry of trailerData) {
-      if (entry.site === "YouTube") {
+      if (entry.size === 1080 && entry.official === true && entry.site === "YouTube") {
         return youTubeBaseURL + entry.key;
       }
     }
@@ -1618,7 +1598,7 @@ document.querySelectorAll(".genre").forEach((genreButton) => {
 document.addEventListener("DOMContentLoaded", () => {
   displayMostTrendingShow();
   displayTrendingShows();
-  getMoviesByGenre();
+  getMoviesByGenre(28, 1);
 });
 
 // Auto-move and controls for the carousel
@@ -1702,3 +1682,40 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
  });
+
+ 
+(function () {
+  emailjs.init("e3ZUBznRByF_3vBfw");
+})();
+function sendMail(event) {
+  event.preventDefault(); 
+  const templateParams = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      message: document.getElementById('message').value
+  };
+
+  emailjs.send("service_gsb7od3", "template_pesxnn3", templateParams)
+      .then((response) => {
+          // Show success message using SweetAlert2
+          Swal.fire({
+              title: 'Email Sent',
+              text: 'Your email has been sent successfully!',
+              icon: 'success',
+          });
+          // Clear the form fields
+          document.getElementById('contactForm').reset()
+      })
+      .catch((error) => {
+          // Show error message using SweetAlert2
+          Swal.fire({
+              title: 'Error',
+              text: 'Failed to send email. Please try again later.',
+              icon: 'error',
+          });
+          console.error('Failed to send email:', error);
+      });
+}
+
+document.getElementById('contactForm'). addEventListener('submit', sendMail);
+
